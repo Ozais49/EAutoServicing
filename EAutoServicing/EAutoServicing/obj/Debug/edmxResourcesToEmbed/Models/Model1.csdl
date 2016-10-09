@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EAutoServicingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="EAutoServicingContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AppUsers" EntityType="EAutoServicingModel.AppUser" />
+    <EntitySet Name="Costumers" EntityType="EAutoServicingModel.Costumer" />
+    <EntitySet Name="Employees" EntityType="EAutoServicingModel.Employee" />
+    <EntitySet Name="Employeetypes" EntityType="EAutoServicingModel.Employeetype" />
+    <EntitySet Name="Genders" EntityType="EAutoServicingModel.Gender" />
+    <EntitySet Name="ServiceBookings" EntityType="EAutoServicingModel.ServiceBooking" />
+    <EntitySet Name="UserRoles" EntityType="EAutoServicingModel.UserRole" />
+    <AssociationSet Name="FK_AppUser_UserRole" Association="EAutoServicingModel.FK_AppUser_UserRole">
+      <End Role="UserRole" EntitySet="UserRoles" />
+      <End Role="AppUser" EntitySet="AppUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_AppUser" Association="EAutoServicingModel.FK_ServiceBooking_AppUser">
+      <End Role="AppUser" EntitySet="AppUsers" />
+      <End Role="Costumer" EntitySet="Costumers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_AppUser1" Association="EAutoServicingModel.FK_ServiceBooking_AppUser1">
+      <End Role="AppUser" EntitySet="AppUsers" />
+      <End Role="Costumer" EntitySet="Costumers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_AppUser2" Association="EAutoServicingModel.FK_ServiceBooking_AppUser2">
+      <End Role="AppUser" EntitySet="AppUsers" />
+      <End Role="ServiceBooking" EntitySet="ServiceBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_AppUser3" Association="EAutoServicingModel.FK_ServiceBooking_AppUser3">
+      <End Role="AppUser" EntitySet="AppUsers" />
+      <End Role="ServiceBooking" EntitySet="ServiceBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_Costumer" Association="EAutoServicingModel.FK_ServiceBooking_Costumer">
+      <End Role="Costumer" EntitySet="Costumers" />
+      <End Role="ServiceBooking" EntitySet="ServiceBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_Gender" Association="EAutoServicingModel.FK_ServiceBooking_Gender">
+      <End Role="Gender" EntitySet="Genders" />
+      <End Role="Costumer" EntitySet="Costumers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Employeetype" Association="EAutoServicingModel.FK_Employee_Employeetype">
+      <End Role="Employeetype" EntitySet="Employeetypes" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Gender" Association="EAutoServicingModel.FK_Employee_Gender">
+      <End Role="Gender" EntitySet="Genders" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_Employee" Association="EAutoServicingModel.FK_ServiceBooking_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="ServiceBooking" EntitySet="ServiceBookings" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AppUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserRoleId" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="UserRole" Relationship="EAutoServicingModel.FK_AppUser_UserRole" FromRole="AppUser" ToRole="UserRole" />
+    <NavigationProperty Name="Costumers" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser" FromRole="AppUser" ToRole="Costumer" />
+    <NavigationProperty Name="Costumers1" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser1" FromRole="AppUser" ToRole="Costumer" />
+    <NavigationProperty Name="ServiceBookings" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser2" FromRole="AppUser" ToRole="ServiceBooking" />
+    <NavigationProperty Name="ServiceBookings1" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser3" FromRole="AppUser" ToRole="ServiceBooking" />
+  </EntityType>
+  <EntityType Name="Costumer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="GenderId" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="EntryBy" Type="Int32" Nullable="false" />
+    <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AppUser" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser" FromRole="Costumer" ToRole="AppUser" />
+    <NavigationProperty Name="AppUser1" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser1" FromRole="Costumer" ToRole="AppUser" />
+    <NavigationProperty Name="ServiceBookings" Relationship="EAutoServicingModel.FK_ServiceBooking_Costumer" FromRole="Costumer" ToRole="ServiceBooking" />
+    <NavigationProperty Name="Gender" Relationship="EAutoServicingModel.FK_ServiceBooking_Gender" FromRole="Costumer" ToRole="Gender" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="GenderId" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="DateJoined" Type="DateTime" Precision="3" />
+    <Property Name="EmployeeTypeId" Type="Int32" />
+    <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="EntryBy" Type="Int32" Nullable="false" />
+    <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employeetype" Relationship="EAutoServicingModel.FK_Employee_Employeetype" FromRole="Employee" ToRole="Employeetype" />
+    <NavigationProperty Name="Gender" Relationship="EAutoServicingModel.FK_Employee_Gender" FromRole="Employee" ToRole="Gender" />
+    <NavigationProperty Name="ServiceBookings" Relationship="EAutoServicingModel.FK_ServiceBooking_Employee" FromRole="Employee" ToRole="ServiceBooking" />
+  </EntityType>
+  <EntityType Name="Employeetype">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Employees" Relationship="EAutoServicingModel.FK_Employee_Employeetype" FromRole="Employeetype" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Gender">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Costumers" Relationship="EAutoServicingModel.FK_ServiceBooking_Gender" FromRole="Gender" ToRole="Costumer" />
+    <NavigationProperty Name="Employees" Relationship="EAutoServicingModel.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="ServiceBooking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CostumerId" Type="Int32" Nullable="false" />
+    <Property Name="VehicleNumber" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="ServicedDate" Type="DateTime" Precision="3" />
+    <Property Name="ServicedBy" Type="Int32" Nullable="false" />
+    <Property Name="NextServiceDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="EntryBy" Type="Int32" Nullable="false" />
+    <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="AppUser" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser2" FromRole="ServiceBooking" ToRole="AppUser" />
+    <NavigationProperty Name="AppUser1" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser3" FromRole="ServiceBooking" ToRole="AppUser" />
+    <NavigationProperty Name="Costumer" Relationship="EAutoServicingModel.FK_ServiceBooking_Costumer" FromRole="ServiceBooking" ToRole="Costumer" />
+    <NavigationProperty Name="Employee" Relationship="EAutoServicingModel.FK_ServiceBooking_Employee" FromRole="ServiceBooking" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AppUsers" Relationship="EAutoServicingModel.FK_AppUser_UserRole" FromRole="UserRole" ToRole="AppUser" />
+  </EntityType>
+  <Association Name="FK_AppUser_UserRole">
+    <End Type="EAutoServicingModel.UserRole" Role="UserRole" Multiplicity="0..1" />
+    <End Type="EAutoServicingModel.AppUser" Role="AppUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AppUser">
+        <PropertyRef Name="UserRoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_AppUser">
+    <End Type="EAutoServicingModel.AppUser" Role="AppUser" Multiplicity="1" />
+    <End Type="EAutoServicingModel.Costumer" Role="Costumer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Costumer">
+        <PropertyRef Name="EntryBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_AppUser1">
+    <End Type="EAutoServicingModel.AppUser" Role="AppUser" Multiplicity="0..1" />
+    <End Type="EAutoServicingModel.Costumer" Role="Costumer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Costumer">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_AppUser2">
+    <End Type="EAutoServicingModel.AppUser" Role="AppUser" Multiplicity="1" />
+    <End Type="EAutoServicingModel.ServiceBooking" Role="ServiceBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceBooking">
+        <PropertyRef Name="EntryBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_AppUser3">
+    <End Type="EAutoServicingModel.AppUser" Role="AppUser" Multiplicity="0..1" />
+    <End Type="EAutoServicingModel.ServiceBooking" Role="ServiceBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceBooking">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_Costumer">
+    <End Type="EAutoServicingModel.Costumer" Role="Costumer" Multiplicity="1" />
+    <End Type="EAutoServicingModel.ServiceBooking" Role="ServiceBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Costumer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceBooking">
+        <PropertyRef Name="CostumerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_Gender">
+    <End Type="EAutoServicingModel.Gender" Role="Gender" Multiplicity="1" />
+    <End Type="EAutoServicingModel.Costumer" Role="Costumer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Costumer">
+        <PropertyRef Name="GenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Employeetype">
+    <End Type="EAutoServicingModel.Employeetype" Role="Employeetype" Multiplicity="0..1" />
+    <End Type="EAutoServicingModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employeetype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="EmployeeTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Gender">
+    <End Type="EAutoServicingModel.Gender" Role="Gender" Multiplicity="1" />
+    <End Type="EAutoServicingModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="GenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_Employee">
+    <End Type="EAutoServicingModel.Employee" Role="Employee" Multiplicity="1" />
+    <End Type="EAutoServicingModel.ServiceBooking" Role="ServiceBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceBooking">
+        <PropertyRef Name="ServicedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

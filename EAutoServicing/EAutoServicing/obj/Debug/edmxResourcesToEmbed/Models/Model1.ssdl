@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EAutoServicingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AppUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="400" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" />
+    <Property Name="UserRoleId" Type="int" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="Costumers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="GenderId" Type="int" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="400" />
+    <Property Name="Email" Type="nvarchar" MaxLength="400" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="400" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="EntryBy" Type="int" Nullable="false" />
+    <Property Name="EntryDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="Photo" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="GenderId" Type="int" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="400" />
+    <Property Name="DOB" Type="datetime" />
+    <Property Name="DateJoined" Type="datetime" />
+    <Property Name="EmployeeTypeId" Type="int" />
+    <Property Name="Photo" Type="nvarchar(max)" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="EntryBy" Type="int" Nullable="false" />
+    <Property Name="EntryDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Employeetypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Genders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ServiceBookings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CostumerId" Type="int" Nullable="false" />
+    <Property Name="VehicleNumber" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="ServicedDate" Type="datetime" />
+    <Property Name="ServicedBy" Type="int" Nullable="false" />
+    <Property Name="NextServiceDate" Type="datetime" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="EntryBy" Type="int" Nullable="false" />
+    <Property Name="EntryDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_AppUser_UserRole">
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="0..1" />
+    <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AppUsers">
+        <PropertyRef Name="UserRoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Employeetype">
+    <End Role="Employeetypes" Type="Self.Employeetypes" Multiplicity="0..1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employeetypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="EmployeeTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Gender">
+    <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="GenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_AppUser">
+    <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="1" />
+    <End Role="Costumers" Type="Self.Costumers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Costumers">
+        <PropertyRef Name="EntryBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_AppUser1">
+    <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="0..1" />
+    <End Role="Costumers" Type="Self.Costumers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Costumers">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_AppUser2">
+    <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="1" />
+    <End Role="ServiceBookings" Type="Self.ServiceBookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceBookings">
+        <PropertyRef Name="EntryBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_AppUser3">
+    <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="0..1" />
+    <End Role="ServiceBookings" Type="Self.ServiceBookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceBookings">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_Costumer">
+    <End Role="Costumers" Type="Self.Costumers" Multiplicity="1" />
+    <End Role="ServiceBookings" Type="Self.ServiceBookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Costumers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceBookings">
+        <PropertyRef Name="CostumerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_Employee">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="ServiceBookings" Type="Self.ServiceBookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceBookings">
+        <PropertyRef Name="ServicedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceBooking_Gender">
+    <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
+    <End Role="Costumers" Type="Self.Costumers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Costumers">
+        <PropertyRef Name="GenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EAutoServicingModelStoreContainer">
+    <EntitySet Name="AppUsers" EntityType="Self.AppUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Costumers" EntityType="Self.Costumers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employeetypes" EntityType="Self.Employeetypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServiceBookings" EntityType="Self.ServiceBookings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AppUser_UserRole" Association="Self.FK_AppUser_UserRole">
+      <End Role="UserRoles" EntitySet="UserRoles" />
+      <End Role="AppUsers" EntitySet="AppUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Employeetype" Association="Self.FK_Employee_Employeetype">
+      <End Role="Employeetypes" EntitySet="Employeetypes" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Gender" Association="Self.FK_Employee_Gender">
+      <End Role="Genders" EntitySet="Genders" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_AppUser" Association="Self.FK_ServiceBooking_AppUser">
+      <End Role="AppUsers" EntitySet="AppUsers" />
+      <End Role="Costumers" EntitySet="Costumers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_AppUser1" Association="Self.FK_ServiceBooking_AppUser1">
+      <End Role="AppUsers" EntitySet="AppUsers" />
+      <End Role="Costumers" EntitySet="Costumers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_AppUser2" Association="Self.FK_ServiceBooking_AppUser2">
+      <End Role="AppUsers" EntitySet="AppUsers" />
+      <End Role="ServiceBookings" EntitySet="ServiceBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_AppUser3" Association="Self.FK_ServiceBooking_AppUser3">
+      <End Role="AppUsers" EntitySet="AppUsers" />
+      <End Role="ServiceBookings" EntitySet="ServiceBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_Costumer" Association="Self.FK_ServiceBooking_Costumer">
+      <End Role="Costumers" EntitySet="Costumers" />
+      <End Role="ServiceBookings" EntitySet="ServiceBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_Employee" Association="Self.FK_ServiceBooking_Employee">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="ServiceBookings" EntitySet="ServiceBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceBooking_Gender" Association="Self.FK_ServiceBooking_Gender">
+      <End Role="Genders" EntitySet="Genders" />
+      <End Role="Costumers" EntitySet="Costumers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

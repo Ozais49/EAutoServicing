@@ -1,0 +1,87 @@
+﻿@model IEnumerable<EAutoServicing.Models.Employee>
+@{
+    var Sno = 0;
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Sno</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>EmployeeType</th>
+            <th>Address</th>
+            <th>Phone Number</th>            
+            <th>Date Of Birth</th>
+            <th>Date Joined</th>
+            
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            Sno++;
+            <tr>
+                <td>@Sno</td>
+                <td>@item.Name</td>
+                <td>@item.Gender.Name</td>
+                <td>@item.Employeetype.Name</td>
+                <td>@item.Address</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.DOB</td>
+                <td>@item.DateJoined</td>
+               
+                <td class="text-right">
+                    @Html.ActionLink("Edit", "edit", new { id = item.Id }, new { @class = "btn glyphicon glyphicon-edit " })|   
+                  @*<a href="@Url.Action("delete", "employee", new { id = item.Id})" class="btn  glyphicon glyphicon-remove click">Delete</a>*@
+                   <span class="btn glyphicon glyphicon-ban-circle click" onclick="e()"></span>
+                   
+            </tr> 
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="/Employee/Create" class="btn btn-info btn-xs" style="float:right;margin-top:25px">Create</a></td>
+        </tr>
+    </tfoot>
+
+</table>
+<script>
+    
+        $(function () {
+          $('.click').click(function (e) {
+            
+              alertify.confirm('Do you want to delete this data.').set('onok', function (closeEvent) {
+                
+                  alertify.success('Ok');
+                  return true;
+                
+              });
+              return false;
+         
+
+           
+           
+            
+         
+          
+
+        });
+       
+        });
+    
+
+</script>
+ 

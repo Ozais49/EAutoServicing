@@ -1,0 +1,105 @@
+﻿@model EAutoServicing.Models.AppUser
+@{
+    ViewBag.Title = "login";
+    Layout = null;
+    
+}
+@Styles.Render("~/Content/css")
+
+<style>
+
+    body, html {
+        /*background: linear-gradient(to left top, aqua, green) fixed;*/
+    }
+    .container
+    {
+        height:500px;
+        width:400px;
+        border:1px solid black;
+        position:absolute;
+        left:500px;
+        background-color:transparent;
+        box-shadow:3px 3px 2px grey;
+    }
+    .form-horizontal {
+     margin:10px;
+     position:relative;
+     top:250px;
+     left:35px;
+     
+    }
+    .col-md-2 {       
+        width:90px;
+    }
+   .col-md-4,
+   form-control
+    {
+       width:100%;
+    }
+   .btn
+   {
+       position:relative;
+       left:35px;
+       top:10px;
+   }
+   .image
+   {
+       position:absolute;
+       left:120px;
+       top:80px;
+       border:1px dashed transparent;
+       width:150px;
+       height:150px;
+       border-radius:360px;
+       background-image:url(../Content/images/profilecard.png);
+       background-position:center;
+       background-size:150px 150px;
+    
+
+   }
+   .container h2
+{
+       position:absolute;
+       left:105px;
+   }
+   
+</style>
+<br/>
+
+<title>EAutoService Login</title>
+
+@using (Html.BeginForm())
+{
+    
+    <div class="container">
+      <h2>Admin Login</h2>
+        <div class="image">
+
+        </div>
+       
+        <div class="form-horizontal">
+
+            <div class="form-group username">
+                <label class="control-label col-md-2" for="UserName">Username</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UserName)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Password">Password</label>
+                <div class="col-md-4">
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                  
+                </div>
+            </div>
+
+
+            <button type="submit" class="col-md-offset-2 btn btn-primary"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+        </div>
+    </div>
+
+}
+
+
+

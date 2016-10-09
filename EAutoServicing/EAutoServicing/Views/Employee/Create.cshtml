@@ -1,0 +1,122 @@
+﻿@model EAutoServicing.Models.Employee
+@{
+    ViewBag.Title = "Create";
+    var src="../Content/images/Default.png";
+    
+    
+}
+<style>
+    .img
+    {
+        height:200px;
+        width:200px;
+    }
+</style>
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { enctype="multipart/form-data" }))
+{
+    
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.GenderId, new { @class = "control-label col-md-2 " })
+            <div class=" col-md-10">
+                @Html.DropDownList("GenderId", null, "--Select Gender---", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.EmployeeTypeId, new { @class = "control-label col-md-2 " })
+            <div class=" col-md-10">
+                @Html.DropDownList("EmployeeTypeid", null, "--Select Employee Type---", new { @class = "form-control" })
+            </div>
+        </div>
+       
+        <div class="form-group" >
+            @Html.LabelFor(x => x.Address, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DOB, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.DOB, new { @class = "form-control datepicker", @style = "max-width:200px;" })
+               
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DateJoined, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.DateJoined, new { @class = "form-control datepicker", @style = "max-width:200px;" })
+              
+            </div>
+        </div>       
+        <div class="form-group">
+            @Html.LabelFor(x => x.Photo, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <img src=@src id="Photo" alt="Employee photo" class="img img-rounded" style="max-width: 200px;" />
+                <input type="file" id="file" name="file" accept="images/*" onchange="showImage(this)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Remarks, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-10" >
+            <input type="submit" value="Save" class="btn btn-primary" /> 
+        
+        
+        </div>
+    </div>
+}
+@section scripts{
+    <script type="text/javascript">
+        function showImage(fileInput) {
+            var files = fileInput.files;
+            var file = files[0];
+            var imageType = /image.*/;
+            if (!file.type.match(imageType)) {
+                //$("#file").val = "";
+                document.getElementById('file').value = "";
+               
+            }
+            else {
+                var reader1 = new FileReader();
+                reader1.onload = (function (aImg) {
+                    return function (e) {
+                        aImg.src = e.target.result;
+                    };
+                });
+                reader1.readAsDataURL(file);
+
+                var img = document.getElementById('Photo');
+                img.file = file;
+                var reader = new FileReader();
+                reader.onload = (function (aImg) {
+                    return function (e) {
+                        aImg.src = e.target.result;
+                    };
+                })(img);
+                reader.readAsDataURL(file);
+            }
+        }
+
+    </script>
+}

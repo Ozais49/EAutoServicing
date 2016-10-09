@@ -1,0 +1,51 @@
+﻿@model IEnumerable<EAutoServicing.Models.AppUser>
+@{
+    var Sno = 0;
+    ViewBag.Title = "Index";
+}
+<style>
+   
+</style>
+
+<h2>Index</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Sno</th>
+            <th>User Name</th>
+            <th>UserRole</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            Sno++;
+            <tr>
+                <td>@Sno</td>
+                <td>@item.UserName</td>
+                <td>@item.UserRole.Name</td>
+                <td class="text-right">
+                    @Html.ActionLink("Edit", "edit", new { id = item.Id }, new { @class = "btn glyphicon glyphicon-edit" }) |
+                    
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn glyphicon glyphicon glyphicon-remove", onClick = "return confirm('Are you sure you want to delete?')" })
+                </td>
+              
+               
+
+            </tr>
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+           
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="/AppUser/Create" class="btn btn-info btn-xs" style="float:right;margin-top:25px">Create</a></td>
+        </tr>
+    </tfoot>
+
+</table>

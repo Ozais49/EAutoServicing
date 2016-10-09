@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EAutoServicing.Models.ServiceBooking>
+@{
+    Layout = null;
+    
+    var Sno = 0;
+    }
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>SNo</th>
+            <th>Costumer Name</th>
+            <th>Vehicle Number</th>
+            <th>Serviced Date</th>
+            <th>SErviced By</th>
+            <th>Next Serviced Date</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            Sno++;
+            <tr>
+                <td>@Sno</td>
+                <td>@item.Costumer.Name</td>
+                <td>@item.VehicleNumber</td>
+                <td>@item.ServicedDate</td>
+                <td>@item.Employee.Name</td>
+                <td>@item.NextServiceDate</td>
+                <td class="text-right">
+                  
+                    @Html.ActionLink("Edit", "EditBooking", new { id = item.Id }, new { @class="btn btn-success btn-xs"}) | 
+                    @Html.ActionLink("Delete", "DeleteBooking", new { id = item.Id }, new { @class = "btn btn-danger btn-xs", onClick = "return confirm('Do you want to Delete this item')" })
+                   
+                </td>
+            </tr>
+        }
+    </tbody>
+    
+</table>
+
+

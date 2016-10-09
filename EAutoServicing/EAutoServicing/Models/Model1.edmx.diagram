@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="08bcbf6ef28a4d298fc46e596729690f" Name="Diagram1">
+        <EntityTypeShape EntityType="EAutoServicingModel.AppUser" Width="1.5" PointX="3" PointY="1.625" />
+        <EntityTypeShape EntityType="EAutoServicingModel.Costumer" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="EAutoServicingModel.Employee" Width="1.5" PointX="5.25" PointY="9.875" />
+        <EntityTypeShape EntityType="EAutoServicingModel.Employeetype" Width="1.5" PointX="3" PointY="11.125" />
+        <EntityTypeShape EntityType="EAutoServicingModel.Gender" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="EAutoServicingModel.ServiceBooking" Width="1.5" PointX="7.5" PointY="1.125" />
+        <EntityTypeShape EntityType="EAutoServicingModel.UserRole" Width="1.5" PointX="0.75" PointY="2.125" />
+        <AssociationConnector Association="EAutoServicingModel.FK_AppUser_UserRole" />
+        <AssociationConnector Association="EAutoServicingModel.FK_ServiceBooking_AppUser" />
+        <AssociationConnector Association="EAutoServicingModel.FK_ServiceBooking_AppUser1" />
+        <AssociationConnector Association="EAutoServicingModel.FK_ServiceBooking_AppUser2" />
+        <AssociationConnector Association="EAutoServicingModel.FK_ServiceBooking_AppUser3" />
+        <AssociationConnector Association="EAutoServicingModel.FK_ServiceBooking_Costumer" />
+        <AssociationConnector Association="EAutoServicingModel.FK_ServiceBooking_Gender" />
+        <AssociationConnector Association="EAutoServicingModel.FK_Employee_Employeetype" />
+        <AssociationConnector Association="EAutoServicingModel.FK_Employee_Gender" />
+        <AssociationConnector Association="EAutoServicingModel.FK_ServiceBooking_Employee" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

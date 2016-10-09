@@ -1,0 +1,14 @@
+﻿<div class="error">
+    @if (TempData["Errors"] != null)
+    {
+        <div role="alert" class="alert alert-danger alert-dismissible fade in">
+            <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">x</span></button>
+            <h4>Oops error occored.....</h4>
+            @foreach (string s in (List<string>)TempData["Errors"])
+            {
+                @s<br />
+            }
+        </div>
+    }
+</div>
+

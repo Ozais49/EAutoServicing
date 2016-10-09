@@ -1,0 +1,61 @@
+﻿@model EAutoServicing.Models.Costumer
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    
+    @Html.HiddenFor(x=>x.Id)
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name, new { @class = "control-label col-md-2 " })
+            <div class=" col-md-10">
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+              
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.GenderId, new { @class = "control-label col-md-2 " })
+            <div class=" col-md-10">
+                @Html.DropDownList("GenderId", null, "--Select Gender---", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Address, new { @class = "control-label col-md-2 " })
+            <div class=" col-md-10">
+                @Html.TextAreaFor(x => x.Address, new { @class = "form-control" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Email, new { @class = "control-label col-md-2 " })
+            <div class=" col-md-10">     
+                  @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })                                            
+                  
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.PhoneNumber, new { @class = "control-label col-md-2 " })
+            <div class=" col-md-10">
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+             
+            </div>
+        </div>
+
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </div>
+
+}
+
+
