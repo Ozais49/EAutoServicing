@@ -26,11 +26,12 @@ namespace EAutoServicing.Models
         }
     
         public virtual DbSet<AppUser> AppUsers { get; set; }
+        public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Costumer> Costumers { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<Employeetype> Employeetypes { get; set; }
-        public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<ServiceBooking> ServiceBookings { get; set; }
+        public virtual DbSet<Solution> Solutions { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<Vehicle> Vehicles { get; set; }
     }
 }

@@ -21,9 +21,11 @@ namespace EAutoServicing.Models
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public int GenderId { get; set; }
+        public string Gender { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
+        public Nullable<int> VehicleId { get; set; }
+        public string VehicleNo { get; set; }
         public string PhoneNumber { get; set; }
         public int Status { get; set; }
         public int EntryBy { get; set; }
@@ -34,7 +36,7 @@ namespace EAutoServicing.Models
     
         public virtual AppUser AppUser { get; set; }
         public virtual AppUser AppUser1 { get; set; }
+        public virtual Vehicle Vehicle { get; set; }
         public virtual ICollection<ServiceBooking> ServiceBookings { get; set; }
-        public virtual Gender Gender { get; set; }
     }
 }

@@ -21,12 +21,11 @@ namespace EAutoServicing.Models
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public int GenderId { get; set; }
+        public string Gender { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<System.DateTime> DateJoined { get; set; }
-        public Nullable<int> EmployeeTypeId { get; set; }
         public string Photo { get; set; }
         public string Remarks { get; set; }
         public int Status { get; set; }
@@ -35,8 +34,6 @@ namespace EAutoServicing.Models
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
     
-        public virtual Employeetype Employeetype { get; set; }
-        public virtual Gender Gender { get; set; }
         public virtual ICollection<ServiceBooking> ServiceBookings { get; set; }
     }
 }

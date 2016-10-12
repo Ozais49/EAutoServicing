@@ -12,30 +12,30 @@ namespace EAutoServicing.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AppUser
+    public partial class Vehicle
     {
-        public AppUser()
+        public Vehicle()
         {
             this.Costumers = new HashSet<Costumer>();
-            this.Costumers1 = new HashSet<Costumer>();
             this.ServiceBookings = new HashSet<ServiceBooking>();
-            this.ServiceBookings1 = new HashSet<ServiceBooking>();
-            this.Vehicles = new HashSet<Vehicle>();
-            this.Vehicles1 = new HashSet<Vehicle>();
         }
     
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public Nullable<int> UserRoleId { get; set; }
-        public Nullable<int> Status { get; set; }
+        public string Model { get; set; }
+        public string Company { get; set; }
+        public Nullable<double> EnginePower { get; set; }
+        public Nullable<int> FuelCapacity { get; set; }
+        public Nullable<int> OilCapacity { get; set; }
+        public string Photo { get; set; }
+        public int Status { get; set; }
+        public Nullable<int> EnteredBy { get; set; }
+        public Nullable<System.DateTime> EnteredDate { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedDate { get; set; }
     
-        public virtual UserRole UserRole { get; set; }
+        public virtual AppUser AppUser { get; set; }
+        public virtual AppUser AppUser1 { get; set; }
         public virtual ICollection<Costumer> Costumers { get; set; }
-        public virtual ICollection<Costumer> Costumers1 { get; set; }
         public virtual ICollection<ServiceBooking> ServiceBookings { get; set; }
-        public virtual ICollection<ServiceBooking> ServiceBookings1 { get; set; }
-        public virtual ICollection<Vehicle> Vehicles { get; set; }
-        public virtual ICollection<Vehicle> Vehicles1 { get; set; }
     }
 }

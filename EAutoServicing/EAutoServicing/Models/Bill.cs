@@ -12,18 +12,15 @@ namespace EAutoServicing.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Gender
+    public partial class Bill
     {
-        public Gender()
-        {
-            this.Costumers = new HashSet<Costumer>();
-            this.Employees = new HashSet<Employee>();
-        }
+        public string BillN0 { get; set; }
+        public string ServiceNo { get; set; }
+        public string SolutionNo { get; set; }
+        public string Desc1 { get; set; }
+        public string Desc2 { get; set; }
+        public Nullable<decimal> Amount { get; set; }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
-    
-        public virtual ICollection<Costumer> Costumers { get; set; }
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual Solution Solution { get; set; }
     }
 }

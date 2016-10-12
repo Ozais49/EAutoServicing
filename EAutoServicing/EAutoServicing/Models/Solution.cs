@@ -12,17 +12,19 @@ namespace EAutoServicing.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Employeetype
+    public partial class Solution
     {
-        public Employeetype()
+        public Solution()
         {
-            this.Employees = new HashSet<Employee>();
+            this.Bills = new HashSet<Bill>();
         }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Id { get; set; }
+        public string ServiceID { get; set; }
+        public string SolutionDesc { get; set; }
+        public Nullable<System.DateTime> SolvedDate { get; set; }
+        public string IsBilled { get; set; }
     
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Bill> Bills { get; set; }
     }
 }

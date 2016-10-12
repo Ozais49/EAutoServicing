@@ -15,10 +15,15 @@ namespace EAutoServicing.Models
     public partial class ServiceBooking
     {
         public int Id { get; set; }
+        public string ServiceNo { get; set; }
         public int CostumerId { get; set; }
+        public Nullable<int> VehicleId { get; set; }
         public string VehicleNumber { get; set; }
         public Nullable<System.DateTime> ServicedDate { get; set; }
         public int ServicedBy { get; set; }
+        public string ServiceType { get; set; }
+        public string ServiceStatus { get; set; }
+        public string Problem { get; set; }
         public Nullable<System.DateTime> NextServiceDate { get; set; }
         public int Status { get; set; }
         public int EntryBy { get; set; }
@@ -30,5 +35,6 @@ namespace EAutoServicing.Models
         public virtual AppUser AppUser1 { get; set; }
         public virtual Costumer Costumer { get; set; }
         public virtual Employee Employee { get; set; }
+        public virtual Vehicle Vehicle { get; set; }
     }
 }

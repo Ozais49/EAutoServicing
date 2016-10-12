@@ -15,16 +15,29 @@
           <Property Name="UserRoleId" Type="int" />
           <Property Name="Status" Type="int" />
         </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="BillN0" />
+          </Key>
+          <Property Name="BillN0" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ServiceNo" Type="varchar" MaxLength="10" />
+          <Property Name="SolutionNo" Type="varchar" MaxLength="10" />
+          <Property Name="Desc1" Type="varchar" MaxLength="50" />
+          <Property Name="Desc2" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Amount" Type="money" />
+        </EntityType>
         <EntityType Name="Costumers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
-          <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="400" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="400" />
           <Property Name="Email" Type="nvarchar" MaxLength="400" />
-          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="400" />
+          <Property Name="VehicleId" Type="int" />
+          <Property Name="VehicleNo" Type="varchar" MaxLength="12" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="EntryBy" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
@@ -38,12 +51,11 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
-          <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="400" />
           <Property Name="DOB" Type="datetime" />
           <Property Name="DateJoined" Type="datetime" />
-          <Property Name="EmployeeTypeId" Type="int" />
           <Property Name="Photo" Type="nvarchar(max)" />
           <Property Name="Remarks" Type="nvarchar(max)" />
           <Property Name="Status" Type="int" Nullable="false" />
@@ -52,36 +64,37 @@
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="Employeetypes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="Genders">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
-        </EntityType>
         <EntityType Name="ServiceBookings">
           <Key>
             <PropertyRef Name="Id" />
+            <PropertyRef Name="ServiceNo" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceNo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CostumerId" Type="int" Nullable="false" />
+          <Property Name="VehicleId" Type="int" />
           <Property Name="VehicleNumber" Type="nvarchar" MaxLength="400" Nullable="false" />
           <Property Name="ServicedDate" Type="datetime" />
           <Property Name="ServicedBy" Type="int" Nullable="false" />
+          <Property Name="ServiceType" Type="char" MaxLength="1" />
+          <Property Name="ServiceStatus" Type="char" MaxLength="1" />
+          <Property Name="Problem" Type="nvarchar(max)" />
           <Property Name="NextServiceDate" Type="datetime" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="EntryBy" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Solution">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ServiceID" Type="varchar" MaxLength="10" />
+          <Property Name="SolutionDesc" Type="varchar(max)" />
+          <Property Name="SolvedDate" Type="date" />
+          <Property Name="IsBilled" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
@@ -90,6 +103,23 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="400" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Model" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Company" Type="varchar" MaxLength="50" />
+          <Property Name="EnginePower" Type="float" />
+          <Property Name="FuelCapacity" Type="int" />
+          <Property Name="OilCapacity" Type="int" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="EnteredBy" Type="int" />
+          <Property Name="EnteredDate" Type="date" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="date" />
         </EntityType>
         <Association Name="FK_AppUser_UserRole">
           <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="0..1" />
@@ -103,27 +133,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Employeetype">
-          <End Role="Employeetypes" Type="Self.Employeetypes" Multiplicity="0..1" />
-          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Bill_ServiceBookings' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Bill_ServiceBookings" />-->
+        <Association Name="FK_Bill_Solution">
+          <End Role="Solution" Type="Self.Solution" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employeetypes">
+            <Principal Role="Solution">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="EmployeeTypeId" />
+            <Dependent Role="Bill">
+              <PropertyRef Name="SolutionNo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Gender">
-          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
-          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+        <Association Name="FK_Costumers_Costumers">
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="0..1" />
+          <End Role="Costumers" Type="Self.Costumers" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Genders">
+            <Principal Role="Vehicle">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="GenderId" />
+            <Dependent Role="Costumers">
+              <PropertyRef Name="VehicleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -199,37 +232,65 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ServiceBooking_Gender">
-          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
-          <End Role="Costumers" Type="Self.Costumers" Multiplicity="*" />
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_servicebooking_Solution' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_servicebooking_Solution" />-->
+        <Association Name="FK_ServiceBookings_ServiceBookings">
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="0..1" />
+          <End Role="ServiceBookings" Type="Self.ServiceBookings" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Genders">
+            <Principal Role="Vehicle">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Costumers">
-              <PropertyRef Name="GenderId" />
+            <Dependent Role="ServiceBookings">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vehicle_AppUsers">
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="0..1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="EnteredBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vehicle_AppUsers1">
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="0..1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="DeletedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EAutoServicingModelStoreContainer">
           <EntitySet Name="AppUsers" EntityType="Self.AppUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Costumers" EntityType="Self.Costumers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Employeetypes" EntityType="Self.Employeetypes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceBookings" EntityType="Self.ServiceBookings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Solution" EntityType="Self.Solution" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicle" EntityType="Self.Vehicle" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AppUser_UserRole" Association="Self.FK_AppUser_UserRole">
             <End Role="UserRoles" EntitySet="UserRoles" />
             <End Role="AppUsers" EntitySet="AppUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Employeetype" Association="Self.FK_Employee_Employeetype">
-            <End Role="Employeetypes" EntitySet="Employeetypes" />
-            <End Role="Employees" EntitySet="Employees" />
+          <AssociationSet Name="FK_Bill_Solution" Association="Self.FK_Bill_Solution">
+            <End Role="Solution" EntitySet="Solution" />
+            <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Gender" Association="Self.FK_Employee_Gender">
-            <End Role="Genders" EntitySet="Genders" />
-            <End Role="Employees" EntitySet="Employees" />
+          <AssociationSet Name="FK_Costumers_Costumers" Association="Self.FK_Costumers_Costumers">
+            <End Role="Vehicle" EntitySet="Vehicle" />
+            <End Role="Costumers" EntitySet="Costumers" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceBooking_AppUser" Association="Self.FK_ServiceBooking_AppUser">
             <End Role="AppUsers" EntitySet="AppUsers" />
@@ -255,9 +316,17 @@
             <End Role="Employees" EntitySet="Employees" />
             <End Role="ServiceBookings" EntitySet="ServiceBookings" />
           </AssociationSet>
-          <AssociationSet Name="FK_ServiceBooking_Gender" Association="Self.FK_ServiceBooking_Gender">
-            <End Role="Genders" EntitySet="Genders" />
-            <End Role="Costumers" EntitySet="Costumers" />
+          <AssociationSet Name="FK_ServiceBookings_ServiceBookings" Association="Self.FK_ServiceBookings_ServiceBookings">
+            <End Role="Vehicle" EntitySet="Vehicle" />
+            <End Role="ServiceBookings" EntitySet="ServiceBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vehicle_AppUsers" Association="Self.FK_Vehicle_AppUsers">
+            <End Role="AppUsers" EntitySet="AppUsers" />
+            <End Role="Vehicle" EntitySet="Vehicle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vehicle_AppUsers1" Association="Self.FK_Vehicle_AppUsers1">
+            <End Role="AppUsers" EntitySet="AppUsers" />
+            <End Role="Vehicle" EntitySet="Vehicle" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -266,12 +335,13 @@
       <Schema Namespace="EAutoServicingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="EAutoServicingContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AppUsers" EntityType="EAutoServicingModel.AppUser" />
+          <EntitySet Name="Bills" EntityType="EAutoServicingModel.Bill" />
           <EntitySet Name="Costumers" EntityType="EAutoServicingModel.Costumer" />
           <EntitySet Name="Employees" EntityType="EAutoServicingModel.Employee" />
-          <EntitySet Name="Employeetypes" EntityType="EAutoServicingModel.Employeetype" />
-          <EntitySet Name="Genders" EntityType="EAutoServicingModel.Gender" />
           <EntitySet Name="ServiceBookings" EntityType="EAutoServicingModel.ServiceBooking" />
+          <EntitySet Name="Solutions" EntityType="EAutoServicingModel.Solution" />
           <EntitySet Name="UserRoles" EntityType="EAutoServicingModel.UserRole" />
+          <EntitySet Name="Vehicles" EntityType="EAutoServicingModel.Vehicle" />
           <AssociationSet Name="FK_AppUser_UserRole" Association="EAutoServicingModel.FK_AppUser_UserRole">
             <End Role="UserRole" EntitySet="UserRoles" />
             <End Role="AppUser" EntitySet="AppUsers" />
@@ -292,24 +362,32 @@
             <End Role="AppUser" EntitySet="AppUsers" />
             <End Role="ServiceBooking" EntitySet="ServiceBookings" />
           </AssociationSet>
+          <AssociationSet Name="FK_Vehicle_AppUsers" Association="EAutoServicingModel.FK_Vehicle_AppUsers">
+            <End Role="AppUser" EntitySet="AppUsers" />
+            <End Role="Vehicle" EntitySet="Vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vehicle_AppUsers1" Association="EAutoServicingModel.FK_Vehicle_AppUsers1">
+            <End Role="AppUser" EntitySet="AppUsers" />
+            <End Role="Vehicle" EntitySet="Vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Solution" Association="EAutoServicingModel.FK_Bill_Solution">
+            <End Role="Solution" EntitySet="Solutions" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Costumers_Costumers" Association="EAutoServicingModel.FK_Costumers_Costumers">
+            <End Role="Vehicle" EntitySet="Vehicles" />
+            <End Role="Costumer" EntitySet="Costumers" />
+          </AssociationSet>
           <AssociationSet Name="FK_ServiceBooking_Costumer" Association="EAutoServicingModel.FK_ServiceBooking_Costumer">
             <End Role="Costumer" EntitySet="Costumers" />
             <End Role="ServiceBooking" EntitySet="ServiceBookings" />
           </AssociationSet>
-          <AssociationSet Name="FK_ServiceBooking_Gender" Association="EAutoServicingModel.FK_ServiceBooking_Gender">
-            <End Role="Gender" EntitySet="Genders" />
-            <End Role="Costumer" EntitySet="Costumers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_Employeetype" Association="EAutoServicingModel.FK_Employee_Employeetype">
-            <End Role="Employeetype" EntitySet="Employeetypes" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_Gender" Association="EAutoServicingModel.FK_Employee_Gender">
-            <End Role="Gender" EntitySet="Genders" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
           <AssociationSet Name="FK_ServiceBooking_Employee" Association="EAutoServicingModel.FK_ServiceBooking_Employee">
             <End Role="Employee" EntitySet="Employees" />
+            <End Role="ServiceBooking" EntitySet="ServiceBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceBookings_ServiceBookings" Association="EAutoServicingModel.FK_ServiceBookings_ServiceBookings">
+            <End Role="Vehicle" EntitySet="Vehicles" />
             <End Role="ServiceBooking" EntitySet="ServiceBookings" />
           </AssociationSet>
         </EntityContainer>
@@ -327,17 +405,33 @@
           <NavigationProperty Name="Costumers1" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser1" FromRole="AppUser" ToRole="Costumer" />
           <NavigationProperty Name="ServiceBookings" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser2" FromRole="AppUser" ToRole="ServiceBooking" />
           <NavigationProperty Name="ServiceBookings1" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser3" FromRole="AppUser" ToRole="ServiceBooking" />
+          <NavigationProperty Name="Vehicles" Relationship="EAutoServicingModel.FK_Vehicle_AppUsers" FromRole="AppUser" ToRole="Vehicle" />
+          <NavigationProperty Name="Vehicles1" Relationship="EAutoServicingModel.FK_Vehicle_AppUsers1" FromRole="AppUser" ToRole="Vehicle" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="BillN0" />
+          </Key>
+          <Property Name="BillN0" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SolutionNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Desc1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Desc2" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Solution" Relationship="EAutoServicingModel.FK_Bill_Solution" FromRole="Bill" ToRole="Solution" />
         </EntityType>
         <EntityType Name="Costumer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="GenderId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleId" Type="Int32" />
+          <Property Name="VehicleNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="EntryBy" Type="Int32" Nullable="false" />
           <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -346,8 +440,8 @@
           <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AppUser" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser" FromRole="Costumer" ToRole="AppUser" />
           <NavigationProperty Name="AppUser1" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser1" FromRole="Costumer" ToRole="AppUser" />
+          <NavigationProperty Name="Vehicle" Relationship="EAutoServicingModel.FK_Costumers_Costumers" FromRole="Costumer" ToRole="Vehicle" />
           <NavigationProperty Name="ServiceBookings" Relationship="EAutoServicingModel.FK_ServiceBooking_Costumer" FromRole="Costumer" ToRole="ServiceBooking" />
-          <NavigationProperty Name="Gender" Relationship="EAutoServicingModel.FK_ServiceBooking_Gender" FromRole="Costumer" ToRole="Gender" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -355,12 +449,11 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="GenderId" Type="Int32" Nullable="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="DOB" Type="DateTime" Precision="3" />
           <Property Name="DateJoined" Type="DateTime" Precision="3" />
-          <Property Name="EmployeeTypeId" Type="Int32" />
           <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Int32" Nullable="false" />
@@ -368,37 +461,23 @@
           <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employeetype" Relationship="EAutoServicingModel.FK_Employee_Employeetype" FromRole="Employee" ToRole="Employeetype" />
-          <NavigationProperty Name="Gender" Relationship="EAutoServicingModel.FK_Employee_Gender" FromRole="Employee" ToRole="Gender" />
           <NavigationProperty Name="ServiceBookings" Relationship="EAutoServicingModel.FK_ServiceBooking_Employee" FromRole="Employee" ToRole="ServiceBooking" />
-        </EntityType>
-        <EntityType Name="Employeetype">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employees" Relationship="EAutoServicingModel.FK_Employee_Employeetype" FromRole="Employeetype" ToRole="Employee" />
-        </EntityType>
-        <EntityType Name="Gender">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Costumers" Relationship="EAutoServicingModel.FK_ServiceBooking_Gender" FromRole="Gender" ToRole="Costumer" />
-          <NavigationProperty Name="Employees" Relationship="EAutoServicingModel.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
         </EntityType>
         <EntityType Name="ServiceBooking">
           <Key>
             <PropertyRef Name="Id" />
+            <PropertyRef Name="ServiceNo" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CostumerId" Type="Int32" Nullable="false" />
+          <Property Name="VehicleId" Type="Int32" />
           <Property Name="VehicleNumber" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="ServicedDate" Type="DateTime" Precision="3" />
           <Property Name="ServicedBy" Type="Int32" Nullable="false" />
+          <Property Name="ServiceType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ServiceStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Problem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NextServiceDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="EntryBy" Type="Int32" Nullable="false" />
@@ -409,6 +488,18 @@
           <NavigationProperty Name="AppUser1" Relationship="EAutoServicingModel.FK_ServiceBooking_AppUser3" FromRole="ServiceBooking" ToRole="AppUser" />
           <NavigationProperty Name="Costumer" Relationship="EAutoServicingModel.FK_ServiceBooking_Costumer" FromRole="ServiceBooking" ToRole="Costumer" />
           <NavigationProperty Name="Employee" Relationship="EAutoServicingModel.FK_ServiceBooking_Employee" FromRole="ServiceBooking" ToRole="Employee" />
+          <NavigationProperty Name="Vehicle" Relationship="EAutoServicingModel.FK_ServiceBookings_ServiceBookings" FromRole="ServiceBooking" ToRole="Vehicle" />
+        </EntityType>
+        <EntityType Name="Solution">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SolutionDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SolvedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsBilled" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Bills" Relationship="EAutoServicingModel.FK_Bill_Solution" FromRole="Solution" ToRole="Bill" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -418,6 +509,27 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AppUsers" Relationship="EAutoServicingModel.FK_AppUser_UserRole" FromRole="UserRole" ToRole="AppUser" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EnginePower" Type="Double" />
+          <Property Name="FuelCapacity" Type="Int32" />
+          <Property Name="OilCapacity" Type="Int32" />
+          <Property Name="Photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="EnteredBy" Type="Int32" />
+          <Property Name="EnteredDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="AppUser" Relationship="EAutoServicingModel.FK_Vehicle_AppUsers" FromRole="Vehicle" ToRole="AppUser" />
+          <NavigationProperty Name="AppUser1" Relationship="EAutoServicingModel.FK_Vehicle_AppUsers1" FromRole="Vehicle" ToRole="AppUser" />
+          <NavigationProperty Name="Costumers" Relationship="EAutoServicingModel.FK_Costumers_Costumers" FromRole="Vehicle" ToRole="Costumer" />
+          <NavigationProperty Name="ServiceBookings" Relationship="EAutoServicingModel.FK_ServiceBookings_ServiceBookings" FromRole="Vehicle" ToRole="ServiceBooking" />
         </EntityType>
         <Association Name="FK_AppUser_UserRole">
           <End Type="EAutoServicingModel.UserRole" Role="UserRole" Multiplicity="0..1" />
@@ -479,6 +591,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Vehicle_AppUsers">
+          <End Type="EAutoServicingModel.AppUser" Role="AppUser" Multiplicity="0..1" />
+          <End Type="EAutoServicingModel.Vehicle" Role="Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="EnteredBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vehicle_AppUsers1">
+          <End Type="EAutoServicingModel.AppUser" Role="AppUser" Multiplicity="0..1" />
+          <End Type="EAutoServicingModel.Vehicle" Role="Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="DeletedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Solution">
+          <End Type="EAutoServicingModel.Solution" Role="Solution" Multiplicity="0..1" />
+          <End Type="EAutoServicingModel.Bill" Role="Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="SolutionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Costumers_Costumers">
+          <End Type="EAutoServicingModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+          <End Type="EAutoServicingModel.Costumer" Role="Costumer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Costumer">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ServiceBooking_Costumer">
           <End Type="EAutoServicingModel.Costumer" Role="Costumer" Multiplicity="1" />
           <End Type="EAutoServicingModel.ServiceBooking" Role="ServiceBooking" Multiplicity="*" />
@@ -491,42 +651,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ServiceBooking_Gender">
-          <End Type="EAutoServicingModel.Gender" Role="Gender" Multiplicity="1" />
-          <End Type="EAutoServicingModel.Costumer" Role="Costumer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gender">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Costumer">
-              <PropertyRef Name="GenderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employee_Employeetype">
-          <End Type="EAutoServicingModel.Employeetype" Role="Employeetype" Multiplicity="0..1" />
-          <End Type="EAutoServicingModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employeetype">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="EmployeeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employee_Gender">
-          <End Type="EAutoServicingModel.Gender" Role="Gender" Multiplicity="1" />
-          <End Type="EAutoServicingModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gender">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="GenderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ServiceBooking_Employee">
           <End Type="EAutoServicingModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="EAutoServicingModel.ServiceBooking" Role="ServiceBooking" Multiplicity="*" />
@@ -536,6 +660,18 @@
             </Principal>
             <Dependent Role="ServiceBooking">
               <PropertyRef Name="ServicedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceBookings_ServiceBookings">
+          <End Type="EAutoServicingModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+          <End Type="EAutoServicingModel.ServiceBooking" Role="ServiceBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceBooking">
+              <PropertyRef Name="VehicleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -556,6 +692,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="EAutoServicingModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Desc2" ColumnName="Desc2" />
+                <ScalarProperty Name="Desc1" ColumnName="Desc1" />
+                <ScalarProperty Name="SolutionNo" ColumnName="SolutionNo" />
+                <ScalarProperty Name="ServiceNo" ColumnName="ServiceNo" />
+                <ScalarProperty Name="BillN0" ColumnName="BillN0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Costumers">
             <EntityTypeMapping TypeName="EAutoServicingModel.Costumer">
               <MappingFragment StoreEntitySet="Costumers">
@@ -566,9 +714,11 @@
                 <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="VehicleNo" ColumnName="VehicleNo" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -584,29 +734,11 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="EmployeeTypeId" ColumnName="EmployeeTypeId" />
                 <ScalarProperty Name="DateJoined" ColumnName="DateJoined" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employeetypes">
-            <EntityTypeMapping TypeName="EAutoServicingModel.Employeetype">
-              <MappingFragment StoreEntitySet="Employeetypes">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Genders">
-            <EntityTypeMapping TypeName="EAutoServicingModel.Gender">
-              <MappingFragment StoreEntitySet="Genders">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -621,10 +753,26 @@
                 <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="NextServiceDate" ColumnName="NextServiceDate" />
+                <ScalarProperty Name="Problem" ColumnName="Problem" />
+                <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
                 <ScalarProperty Name="ServicedBy" ColumnName="ServicedBy" />
                 <ScalarProperty Name="ServicedDate" ColumnName="ServicedDate" />
                 <ScalarProperty Name="VehicleNumber" ColumnName="VehicleNumber" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
                 <ScalarProperty Name="CostumerId" ColumnName="CostumerId" />
+                <ScalarProperty Name="ServiceNo" ColumnName="ServiceNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Solutions">
+            <EntityTypeMapping TypeName="EAutoServicingModel.Solution">
+              <MappingFragment StoreEntitySet="Solution">
+                <ScalarProperty Name="IsBilled" ColumnName="IsBilled" />
+                <ScalarProperty Name="SolvedDate" ColumnName="SolvedDate" />
+                <ScalarProperty Name="SolutionDesc" ColumnName="SolutionDesc" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -634,6 +782,24 @@
               <MappingFragment StoreEntitySet="UserRoles">
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicles">
+            <EntityTypeMapping TypeName="EAutoServicingModel.Vehicle">
+              <MappingFragment StoreEntitySet="Vehicle">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EnteredDate" ColumnName="EnteredDate" />
+                <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="OilCapacity" ColumnName="OilCapacity" />
+                <ScalarProperty Name="FuelCapacity" ColumnName="FuelCapacity" />
+                <ScalarProperty Name="EnginePower" ColumnName="EnginePower" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
