@@ -12,6 +12,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Bills">
+      <EntityTypeMapping TypeName="EAutoServicingModel.Bill">
+        <MappingFragment StoreEntitySet="Bill">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Desc2" ColumnName="Desc2" />
+          <ScalarProperty Name="Desc1" ColumnName="Desc1" />
+          <ScalarProperty Name="SolutionNo" ColumnName="SolutionNo" />
+          <ScalarProperty Name="ServiceNo" ColumnName="ServiceNo" />
+          <ScalarProperty Name="BillN0" ColumnName="BillN0" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Costumers">
       <EntityTypeMapping TypeName="EAutoServicingModel.Costumer">
         <MappingFragment StoreEntitySet="Costumers">
@@ -22,9 +34,11 @@
           <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="VehicleNo" ColumnName="VehicleNo" />
+          <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -40,29 +54,11 @@
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Remarks" ColumnName="Remarks" />
           <ScalarProperty Name="Photo" ColumnName="Photo" />
-          <ScalarProperty Name="EmployeeTypeId" ColumnName="EmployeeTypeId" />
           <ScalarProperty Name="DateJoined" ColumnName="DateJoined" />
           <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="GenderId" ColumnName="GenderId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Employeetypes">
-      <EntityTypeMapping TypeName="EAutoServicingModel.Employeetype">
-        <MappingFragment StoreEntitySet="Employeetypes">
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Genders">
-      <EntityTypeMapping TypeName="EAutoServicingModel.Gender">
-        <MappingFragment StoreEntitySet="Genders">
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -77,11 +73,38 @@
           <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="NextServiceDate" ColumnName="NextServiceDate" />
+          <ScalarProperty Name="Problem" ColumnName="Problem" />
+          <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
           <ScalarProperty Name="ServicedBy" ColumnName="ServicedBy" />
           <ScalarProperty Name="ServicedDate" ColumnName="ServicedDate" />
           <ScalarProperty Name="VehicleNumber" ColumnName="VehicleNumber" />
+          <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
           <ScalarProperty Name="CostumerId" ColumnName="CostumerId" />
+          <ScalarProperty Name="ServiceNo" ColumnName="ServiceNo" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Solutions">
+      <EntityTypeMapping TypeName="EAutoServicingModel.Solution">
+        <MappingFragment StoreEntitySet="Solution">
+          <ScalarProperty Name="IsBilled" ColumnName="IsBilled" />
+          <ScalarProperty Name="SolvedDate" ColumnName="SolvedDate" />
+          <ScalarProperty Name="SolutionDesc" ColumnName="SolutionDesc" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="EAutoServicingModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -90,6 +113,24 @@
         <MappingFragment StoreEntitySet="UserRoles">
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vehicles">
+      <EntityTypeMapping TypeName="EAutoServicingModel.Vehicle">
+        <MappingFragment StoreEntitySet="Vehicle">
+          <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="EnteredDate" ColumnName="EnteredDate" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="OilCapacity" ColumnName="OilCapacity" />
+          <ScalarProperty Name="FuelCapacity" ColumnName="FuelCapacity" />
+          <ScalarProperty Name="EnginePower" ColumnName="EnginePower" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

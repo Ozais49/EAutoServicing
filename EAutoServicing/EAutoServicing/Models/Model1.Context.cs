@@ -31,6 +31,7 @@ namespace EAutoServicing.Models
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<ServiceBooking> ServiceBookings { get; set; }
         public virtual DbSet<Solution> Solutions { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
     }
