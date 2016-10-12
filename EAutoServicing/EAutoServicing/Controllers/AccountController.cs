@@ -348,7 +348,7 @@ namespace EAutoServicing.Controllers
 
         private bool HasPassword()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
+            var user = UserManager.FindById(User.Identity.GetUserId())==null?null: UserManager.FindById(User.Identity.GetUserId());
             if (user != null)
             {
                 return user.PasswordHash != null;

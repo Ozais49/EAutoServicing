@@ -6,24 +6,21 @@ using System.Web.Mvc;
 
 namespace EAutoServicing.Controllers
 {
-    public class HomeController : Controller
+    public class VehicleController : Controller
     {
+        // GET: Vehicle
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult Create()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Create(Models.Vehicle model)
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

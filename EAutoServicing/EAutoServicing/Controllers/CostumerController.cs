@@ -20,19 +20,16 @@ namespace EAutoServicing.Controllers
         EAutoServicingContext db = new EAutoServicingContext();
         public ActionResult Index()
         {
-                     
-            ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
-           
             return View();
         }
 
         [HttpGet]
-        public ActionResult Detail(string Name,int? GenderId,string Address, int?page)
+        public ActionResult Detail(string Name,string Gender,string Address, int?page)
         {
             var model = db.Costumers
                 .Where(x =>
                         (string.IsNullOrEmpty(Name) || x.Name.StartsWith(Name)) &&
-                        (GenderId == null || x.GenderId == GenderId) &&
+                        (Gender == null || x.Gender == Gender) &&
                         (string.IsNullOrEmpty(Address) || x.Address.StartsWith(Address))&&
                         (x.Status == (int)DataStatus.Active)
                         ).ToList().ToPagedList(page ?? 1, 10); 
@@ -45,7 +42,7 @@ namespace EAutoServicing.Controllers
         #region Create
         public ActionResult Create()
         {
-            ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
+           // ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
             return View();
         }
         [HttpPost]
@@ -80,7 +77,7 @@ namespace EAutoServicing.Controllers
             }
             if (errors.Count > 0)
                 TempData["Errors"] = errors;
-            ViewBag.GenderId   = new SelectList(db.Genders, "Id", "Name");
+            //ViewBag.GenderId   = new SelectList(db.Genders, "Id", "Name");
 
 
             return View(model);  
@@ -94,7 +91,6 @@ namespace EAutoServicing.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name", model.GenderId);
             return View(model);
         }
 
@@ -106,7 +102,7 @@ namespace EAutoServicing.Controllers
             {
                 var _Oldmodel = db.Costumers.Find(model.Id);
                 _Oldmodel.Name = model.Name;
-                _Oldmodel.GenderId = model.GenderId;
+                _Oldmodel.Gender = model.Gender;
                 _Oldmodel.Address = model.Address;
                 _Oldmodel.Email = model.Email;
                 _Oldmodel.PhoneNumber = model.PhoneNumber;
@@ -132,7 +128,6 @@ namespace EAutoServicing.Controllers
             }
             if (errors.Count > 0)
                 TempData["Errors"] = errors;
-            ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
             return View();
         }
 
@@ -173,7 +168,7 @@ namespace EAutoServicing.Controllers
 
             ViewBag.CostumerId = new SelectList(db.Costumers, "Id", "Name");
                  
-            ViewBag.ServicedBy = new SelectList(db.Employees.Where(x=>(x.EmployeeTypeId==1) &&(x.Status==1)), "Id", "Name");
+            ViewBag.ServicedBy = new SelectList(db.Employees.Where(x=>(x.Status==1)), "Id", "Name");
             
             var model = new ServiceBooking { CostumerId = Costumer.Id };
             
@@ -213,7 +208,7 @@ namespace EAutoServicing.Controllers
                 TempData["Errors"] = errors;
             }
             ViewBag.CostumerId = new SelectList(db.Costumers, "Id", "Name");
-            ViewBag.ServicedBy = new SelectList(db.Employees.Where(x => (x.EmployeeTypeId == 2) && (x.Status == 1)), "Id", "Name");
+            ViewBag.ServicedBy = new SelectList(db.Employees.Where(x => (x.Status == 1)), "Id", "Name");
 
             //ViewBag.ServicedBy = new SelectList(db.Employees, "Id", "Name");
            
@@ -242,7 +237,7 @@ namespace EAutoServicing.Controllers
             }
             ViewBag.CostumerId = new SelectList(db.Costumers, "Id", "Name",model.CostumerId);
            // ViewBag.ServicedBy = new SelectList(db.Employees, "Id", "Name",model.ServicedBy);
-            ViewBag.ServicedBy = new SelectList(db.Employees.Where(x => (x.EmployeeTypeId == 1) && (x.Status == 1)), "Id", "Name",model.ServicedBy);
+            ViewBag.ServicedBy = new SelectList(db.Employees.Where(x => (x.Status == 1)), "Id", "Name",model.ServicedBy);
 
            
             return View(model);
@@ -277,7 +272,7 @@ namespace EAutoServicing.Controllers
             if (errors.Count > 0)
                 TempData["Errors"] = errors;
             //ViewBag.ServicedBy = new SelectList(db.Employees, "Id", "Name",model.ServicedBy);
-            ViewBag.ServicedBy = new SelectList(db.Employees.Where(x => (x.EmployeeTypeId == 2) && (x.Status == 1)), "Id", "Name",model.ServicedBy);
+            ViewBag.ServicedBy = new SelectList(db.Employees.Where(x =>  (x.Status == 1)), "Id", "Name",model.ServicedBy);
 
             return View();
 

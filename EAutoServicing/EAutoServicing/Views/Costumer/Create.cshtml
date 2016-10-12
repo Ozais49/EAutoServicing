@@ -1,43 +1,69 @@
 ﻿@model EAutoServicing.Models.Costumer
 @{
     ViewBag.Title = "Create";
+    SelectListItem male = new SelectListItem() { Text="Male",Value="M"};
+    SelectListItem female = new SelectListItem() { Text="Female",Value="F"};
+    SelectListItem other = new SelectListItem() { Text="Other",Value="O"};
+    List<SelectListItem> genders = new List<SelectListItem>();
+    genders.Add(male);
+    genders.Add(female);
+    genders.Add(other);
 }
 <h3>Create</h3>
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
-        <div class="form-group">
-            @Html.LabelFor(x => x.Name, new { @class = "control-label col-md-2 " })
-            <div class=" col-md-10">
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        <fieldset>
+            <legend>Personal Details</legend>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Name, new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.GenderId, new { @class = "control-label col-md-2 " })
-            <div class=" col-md-10">
-                @Html.DropDownList("GenderId", null, "--Select Gender---", new { @class = "form-control" })
+            <div class="form-group">
+                @Html.LabelFor(x => x.Gender, new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x=>x.Gender,genders,"--Select Gender--",new { @class="form-control"})
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.Address, new { @class = "control-label col-md-2 " })
-            <div class=" col-md-10">
-                @Html.TextAreaFor(x => x.Address, new { @class = "form-control" })
+            <div class="form-group">
+                @Html.LabelFor(x => x.Address, new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.Address, new { @class = "form-control" })
+                </div>
             </div>
-        </div>   
-        <div class="form-group">
-            @Html.LabelFor(x => x.Email, new { @class = "control-label col-md-2 " })
-            <div class=" col-md-10">
-                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
-               
+            <div class="form-group">
+                @Html.LabelFor(x => x.Email, new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.PhoneNumber, new { @class = "control-label col-md-2 " })
-            <div class=" col-md-10">
-                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
-               
+            <div class="form-group">
+                @Html.LabelFor(x => x.PhoneNumber, new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+
+                </div>
             </div>
-        </div>       
+        </fieldset>
+        <fieldset>
+            <legend>Vehicle Info</legend>
+            <div class="form-group">
+                @Html.LabelFor(x => x.VehicleId, new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="txtVehicle" />
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control hidden" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.VehicleNo, new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                </div>
+            </div>
+        </fieldset>       
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Submit" class="btn btn-primary" />
         </div>       

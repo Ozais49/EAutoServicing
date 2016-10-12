@@ -2,8 +2,14 @@
 @{
     ViewBag.Title = "Create";
     var src="../Content/images/Default.png";
-    
-    
+
+    SelectListItem male = new SelectListItem() { Text = "Male", Value = "M" };
+    SelectListItem female = new SelectListItem() { Text = "Female", Value = "F" };
+    SelectListItem other = new SelectListItem() { Text = "Other", Value = "O" };
+    List<SelectListItem> genders = new List<SelectListItem>();
+    genders.Add(male);
+    genders.Add(female);
+    genders.Add(other);
 }
 <style>
     .img
@@ -27,17 +33,17 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(x => x.GenderId, new { @class = "control-label col-md-2 " })
+            @Html.LabelFor(x => x.Gender, new { @class = "control-label col-md-2 " })
             <div class=" col-md-10">
-                @Html.DropDownList("GenderId", null, "--Select Gender---", new { @class = "form-control" })
+                @Html.DropDownListFor(x=>x.Gender,genders, "--Select Gender---", new { @class = "form-control" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.EmployeeTypeId, new { @class = "control-label col-md-2 " })
+        @*<div class="form-group">
+            @Html.LabelFor(x => x.EmployeeType, new { @class = "control-label col-md-2 " })
             <div class=" col-md-10">
                 @Html.DropDownList("EmployeeTypeid", null, "--Select Employee Type---", new { @class = "form-control" })
             </div>
-        </div>
+        </div>*@
        
         <div class="form-group" >
             @Html.LabelFor(x => x.Address, new { @class = "col-md-2 control-label" })

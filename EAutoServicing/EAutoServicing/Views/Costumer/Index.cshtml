@@ -1,10 +1,10 @@
 ﻿
 @{
     
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Customer List";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
     <div class="form-inline">
         <div class="form-group">
@@ -12,9 +12,13 @@
             <input type="text" class="form-control" id="Name" name="Name" placeholder="Name" value="@ViewBag.Name" />
         </div>
         <div class="form-group">
-            <label for="GenderId" class="control-label">Gender</label>
-            @Html.DropDownList("GenderID", null, "--All Gender--", new { @class="form-control"})
-        </div>
+            <label for="Gender" class="control-label">Gender</label>
+            <select name="Gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
+            </select>
+                </div>
         <div class="form-group">
             <label for="Address" class="control-label">Address</label>
             <input type="text" class="form-control" id="Address" name="Address" placeholder="Address" value="@ViewBag.Address" />
@@ -32,7 +36,7 @@
             $.ajax({
                 url: '@Url.Action("Detail","Costumer")',
                 type: 'Get',
-                data: { Name: Name.value,GenderID:GenderID.value, Address: Address.value },
+                data: { Name: Name.value,Gender:Gender.value, Address: Address.value },
                 success: function (results) {
                     $('#DataDetail').html(results)
                 },

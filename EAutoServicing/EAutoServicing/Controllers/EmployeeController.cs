@@ -27,8 +27,8 @@ namespace EAutoServicing.Controllers
         }
         public ActionResult Create()
         {
-            ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
-            ViewBag.EmployeeTypeid = new SelectList(db.Employeetypes, "Id", "Name");
+           // ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
+            //ViewBag.EmployeeTypeid = new SelectList(db.Employeetypes, "Id", "Name");
             return View();
         }
         [HttpPost]
@@ -91,8 +91,8 @@ namespace EAutoServicing.Controllers
             }
             if (errors.Count > 0)
                 TempData["Errors"] = errors;
-            ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
-            ViewBag.EmployeeTypeid = new SelectList(db.Employeetypes, "Id", "Name");
+            //ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
+            //ViewBag.EmployeeTypeid = new SelectList(db.Employeetypes, "Id", "Name");
             return View();
         }
 
@@ -106,8 +106,8 @@ namespace EAutoServicing.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name",model.GenderId);
-            ViewBag.EmployeeTypeid = new SelectList(db.Employeetypes, "Id", "Name",model.EmployeeTypeId);
+            //ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name",model.GenderId);
+            //ViewBag.EmployeeTypeid = new SelectList(db.Employeetypes, "Id", "Name",model.EmployeeTypeId);
             return View(model);
         }
         [HttpPost]
@@ -144,19 +144,19 @@ namespace EAutoServicing.Controllers
                         }
                     }
                            _oldModel.Name = model.Name;
-                           _oldModel.GenderId = model.GenderId;
+                           _oldModel.Gender = model.Gender;
                            _oldModel.Address = model.Address;
                            _oldModel.PhoneNumber = model.PhoneNumber;
                            _oldModel.DOB = model.DOB;
                            _oldModel.DateJoined = model.DateJoined;
-                           _oldModel.EmployeeTypeId = model.EmployeeTypeId;
+                          // _oldModel.EmployeeTypeId = model.EmployeeTypeId;
                            _oldModel.Remarks = model.Remarks;
                     db.SaveChanges();
                     return RedirectToAction("index");
                 }
             }
-            ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
-            ViewBag.EmployeeTypeid = new SelectList(db.Employeetypes, "Id", "Name");
+            //ViewBag.GenderId = new SelectList(db.Genders, "Id", "Name");
+            //ViewBag.EmployeeTypeid = new SelectList(db.Employeetypes, "Id", "Name");
             return View(model);
         }
         //#region codeedit
