@@ -1,0 +1,68 @@
+﻿@model EAutoServicing.Models.ServiceBooking
+@{
+    ViewBag.Title = "CreateBooking";
+    //var Costumer = ViewBag.costumer;
+}
+
+<style>
+    .glyphicon {
+        font-size: 30px;
+        opacity: 0.7;
+        color: darkblue;
+        border-radius: 360px;
+    }
+
+        .glyphicon:hover {
+            opacity: 1;
+        }
+</style>
+@*<h3>Booking For @Costumer</h3>*@
+<h3>Create Booking</h3>
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+       
+        <div class="form-group">
+            @Html.LabelFor(x => x.VehicleNumber, new { @class = "col-md-3 control-label" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(x => x.VehicleNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.VehicleNumber)
+            </div>
+        @*</div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.ServicedBy, new { @class = "col-md-3 control-label" })
+            <div class="col-md-4">
+                @Html.DropDownList("ServicedBy", null, "Assign Mechanic", new { @class = "form-control" })
+            </div>
+        </div>*@
+        <div class="form-group">
+            @Html.LabelFor(x => x.ServicedDate, new { @class = "col-md-3 control-label" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(x => x.ServicedDate, new { @class = "form-control datepicker" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Problem, new { @class = "col-md-3 control-label" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(x => x.Problem, new { @class = "form-control datepicker" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.NextServiceDate, new { @class = "col-md-3 control-label" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(x => x.NextServiceDate, new { @class = "form-control datepicker" })
+            </div>
+        </div>
+            
+               </div>
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+        </div>
+}
+@*<a href="/Costumer/Index"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>*@
+
+
+<br />
+<hr />

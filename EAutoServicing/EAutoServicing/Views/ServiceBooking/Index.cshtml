@@ -1,0 +1,51 @@
+﻿@model IEnumerable<EAutoServicing.Models.ServiceBooking>
+@{
+    ViewBag.Title = "Index";
+    var Sno = 0;
+}
+
+
+<h2>Index</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Sno</th>
+            <th>Name</th>
+            <th>Vehicle Number</th>
+            @*<th>EmployeeType</th>*@
+            <th>Service Number</th>
+            <th>Service Date</th>
+            <th>Service Type</th>
+            <th>Problem</th>
+            <th>Service Status</th>
+            <th>Serviced By</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            Sno++;
+            <tr>
+                <td>@Sno</td>
+                <td>@item.Costumer.Name</td>
+                <td>@item.VehicleNumber</td>
+                @*<td>@item.Employeetype.Name</td>*@
+                <td>@item.ServiceNo</td>
+                <td>@item.ServicedDate</td>
+                <td>@item.ServiceType</td>
+                <td>@item.Problem</td>
+                <td>@item.ServiceStatus</td>
+                <td>@item.ServicedBy</td>
+
+                <td class="text-right">
+                    @Html.ActionLink("Edit", "edit", new { id = item.Id }, new { @class = "btn glyphicon glyphicon-edit " })|
+                    @*<a href="@Url.Action("delete", "employee", new { id = item.Id})" class="btn  glyphicon glyphicon-remove click">Delete</a>*@
+                    <span class="btn glyphicon glyphicon-ban-circle click" onclick="e()"></span>
+
+            </tr>
+        }
+
+    </tbody>
+    </table>
